@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> New Document </title>
+  <meta name="Generator" content="EditPlus">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+ </head>
+ <body>
+
+<?php
+
+// Replace this with your own email address
+$siteOwnersEmail= 'dakshata.sharma@gmail.com';
+
+$name=$_POST['name'];
+$email=$_POST['email'];
+$mobileno=$_POST['mobileno'];
+$phoneno=$_POST['phoneno'];
+$checkin=$_POST['checkin'];
+$checkout=$_POST['checkout'];
+$room=$_POST['room'];
+$members=$_POST['members'];
+
+
+$subject = "Book a room in Pinakine Cottages";
+
+/*
+echo $name;
+echo $email;
+echo $phoneno;
+echo $length;
+echo $members;
+echo $date;
+echo $extra; */
+
+
+   // Set Message
+   $message .= "Name: " . $name . "<br />";
+   $message .= "Email address: " . $email . "<br />";
+   $message .= "Mobile number: " . $mobileno . " <br />";
+   $message .= "Phone number: " . $phoneno . " <br />";
+   $message .= "Checkin date: " . $checkin . "<br />";
+   $message .= "Checkout date: " . $checkout . "<br />";
+   $message .= "Number of rooms: " . $room . "<br />";
+   $message .= "Number of members: " . $members . "<br />";
+   
+   $message .= "<br /> ----- <br /> This email was sent from your site's form. <br/>";
+
+   // Set From: header
+   $from =  $name . " <" . $email . ">";
+
+   // Email Headers
+	$headers = "From: " . $from . "\r\n";
+	$headers .= "Reply-To: ". $email . "\r\n";
+ 	$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+	// $retval = mail ($siteOwnersEmail,$subject,$message,$headers);
+
+	 //echo $message;
+	 
+   if (!$error)
+   {
+
+      ini_set("sendmail_from", $siteOwnersEmail); // for windows server
+      $mail = mail($siteOwnersEmail, $subject, $message, $headers);
+
+   $flag=0;
+
+   if ($mail) 
+   { echo " 
+    <script>alert('Your message has been sent.Thanks for contacting us and we will shortly in touch with you for Hotels Booking.');
+location='index.html';
+</script>";
+   }
+   else { echo "Something went wrong. Please try again."; }
+		
+	} # end if - no validation error
+
+	else 
+	{
+
+		$response = (isset($error['name'])) ? $error['name'] . "<br /> \n" : null;
+		$response .= (isset($error['email'])) ? $error['email'] . "<br /> \n" : null;
+		$response .= (isset($error['message'])) ? $error['message'] . "<br />" : null;
+		
+		echo $response;
+
+	} # end if - there was a validation error
+	
+
+
+//header("location: index.html");
+
+
+?>
+
+ </body>
+</html>
